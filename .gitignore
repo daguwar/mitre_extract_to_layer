@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+.env/
+.env.*
+
+# IDE/editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Output and generated files
+attack_layer.json
+attack_layer_test.json
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db

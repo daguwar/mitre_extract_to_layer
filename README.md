@@ -8,6 +8,15 @@ Inspired by https://github.com/splunk/attack-detections-collector
 python.exe ./mitre_extractor.py --text ./test.txt --res st
 ```
 
+# Generate ATT&CK Navigator layer
+```
+python.exe ./mitre_extractor.py --text ./test.txt --res st --output-layer attack_layer.json --attack-version 19
+```
+
+You can then load `attack_layer.json` in ATT&CK Navigator to see techniques shaded in blue based on frequency.
+
+If you want to target another ATT&CK release, change `--attack-version` accordingly.
+
 # Example Output
 
 ```
