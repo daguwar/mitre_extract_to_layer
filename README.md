@@ -46,7 +46,7 @@ python.exe ./mitre_extract_to_layer.py --pdf ./report.pdf --res st
 - `--text <path>` — path to a text-based input file
 - `--url <url>` — URL of a web-based report or page
 - `--pdf <path>` — path to a PDF file
-- `--res <t|st>` — technique resolution: `t` for top-level techniques, `st` for sub-techniques
+- `--res <t|st|both>` — technique resolution: `t` for top-level techniques, `st` for sub-techniques, `both` for both types (default)
 - `--output-layer <path>` — write an ATT&CK Navigator JSON layer file
 - `--layer-name <name>` — layer name for the generated JSON file
 - `--layer-description <text>` — layer description for the generated JSON file
@@ -55,10 +55,10 @@ python.exe ./mitre_extract_to_layer.py --pdf ./report.pdf --res st
 ## Generate ATT&CK Navigator layer
 
 ```bash
-python.exe ./mitre_extract_to_layer.py --text ./test.txt --res st --output-layer attack_layer.json --attack-version 19
+python.exe ./mitre_extract_to_layer.py --text ./test.txt --res both --output-layer attack_layer.json --attack-version 19
 ```
 
-The generated layer file can be loaded into ATT&CK Navigator and will contain technique scores and blue shading according to frequency.
+The generated layer file can be loaded into ATT&CK Navigator and will contain technique scores. Navigator applies blue shading from the layer `gradient`.
 
 ## Example output
 
@@ -88,6 +88,7 @@ Total Instances of MITRE ATT&CK Techniques found: 21
 
 - `--res st` searches for ATT&CK sub-techniques like `T1234.001`.
 - `--res t` searches for top-level techniques like `T1234`.
+- `--res both` searches for both top-level techniques and sub-techniques.
 - The Navigator layer file is only created when `--output-layer` is provided.
 - PDF extraction requires `PyMuPDF`; text and URL extraction work without it.
 - `requirements.txt` includes all Python dependencies needed to run the script.

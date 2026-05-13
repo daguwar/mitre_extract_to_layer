@@ -40,28 +40,12 @@ def extract_techniques_pdf(file: str, pattern: str) -> list:
 
 
 def resolution_pattern(resolution: str) -> str:
-    """Return regex pattern for technique resolution."""
+    """Return regex pattern for the selected technique resolution."""
     if resolution == "st":
-        return r'(T\d{4}\.\d{3})'
-    return r'T\d{4}'
-
-
-def blue_color_for_frequency(
-    count: int,
-    min_count: int,
-    max_count: int
-) -> str:
-    """Generate blue color hex based on frequency."""
-    light = (198, 219, 239)
-    dark = (8, 48, 107)
-    if max_count == min_count:
-        ratio = 1.0
-    else:
-        ratio = (count - min_count) / (max_count - min_count)
-    r = int(light[0] + ratio * (dark[0] - light[0]))
-    g = int(light[1] + ratio * (dark[1] - light[1]))
-    b = int(light[2] + ratio * (dark[2] - light[2]))
-    return f"#{r:02x}{g:02x}{b:02x}"
+        return r'\bT\d{4}\.\d{3}\b'
+    if resolution == "both":
+        return r'\bT\d{4}(?:\.\d{3})?\b'
+    return r'\bT\d{4}\b(?!\.\d{3})'
 
 
 def generate_attack_layer(
@@ -83,7 +67,6 @@ def generate_attack_layer(
         techniques.append({
             "techniqueID": technique,
             "score": count,
-            "color": blue_color_for_frequency(count, min_count, max_count),
             "comment": "",
             "enabled": True,
         })
@@ -120,15 +103,11 @@ def generate_attack_layer(
         "legendItems": [
             {
                 "label": "Highest frequency",
-                "color": blue_color_for_frequency(
-                    max_count, min_count, max_count
-                ),
+                "color": "#08519c",
             },
             {
                 "label": "Lowest frequency",
-                "color": blue_color_for_frequency(
-                    min_count, min_count, max_count
-                ),
+                "color": "#c6dbef",
             },
         ],
         "showTacticRowBackground": False,
@@ -187,8 +166,12 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "--res",
-        default="t",
-        help="The desired technique resolution technique (t), sub-technique (st). Defaults to t"  
+        choices=["t", "st", "both"],
+        default="both",
+        help=(
+            "Technique resolution to count: t = top-level techniques,"
+            " st = sub-techniques, both = both types. Defaults to both"
+        )
     )
     parser.add_argument(
         "--output-layer",
