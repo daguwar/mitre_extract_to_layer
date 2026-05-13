@@ -1,17 +1,11 @@
 # mitre_extract_to_layer
 A utility to extract MITRE ATT&CK technique IDs from text, PDF or web content, count occurrences and optionally generate an ATT&CK Navigator layer file.
 
-Inspired by https://github.com/splunk/attack-detections-collector
-
-This project is based on an MIT-licensed script by Adrian G and has been extended further.
-
 ## Requirements
 
 - Python 3.8+
-- `requests` (for URL extraction)
-- `PyMuPDF` (only if you want PDF extraction)
-
-The `requirements.txt` file includes all necessary dependencies, including sub-dependencies like `certifi`, `charset-normalizer`, `idna`, and `urllib3`.
+- `requests` for URL extraction
+- `PyMuPDF` only if you want PDF extraction
 
 Install dependencies with:
 
@@ -22,10 +16,10 @@ python -m pip install -r requirements.txt
 ## Use cases
 
 - Extract ATT&CK technique IDs from incident reports, threat intelligence write-ups or security advisories.
-- Count technique occurrences in text, HTML or PDF sources to prioritize the most frequent and most relevant techniques.
-- Build a layer file for ATT&CK Navigator so analysts can quickly visualize a report's dominant techniques.
-- Use the JSON layer output for presentations, threat-hunting dashboards, or sharing with SOC teams.
-- Compare multiple reports and cross-check findings by generating and overlaying several Navigator layers.
+- Count technique occurrences to identify the most frequent attack methods.
+- Generate a Navigator layer file for visualization and analyst review.
+- Share JSON layer files with SOC teams or use them in dashboards.
+- Compare multiple documents by creating separate Navigator layers.
 
 ## Usage
 
@@ -47,19 +41,24 @@ Extract from a PDF file:
 python.exe ./mitre_extract_to_layer.py --pdf ./report.pdf --res st
 ```
 
-## Generate ATT&CK Navigator layer
+## Options
 
-The script can also generate a Navigator JSON layer file with technique scores and blue shading based on frequency:
+- `--text <path>` — path to a text-based input file
+- `--url <url>` — URL of a web-based report or page
+- `--pdf <path>` — path to a PDF file
+- `--res <t|st>` — technique resolution: `t` for top-level techniques, `st` for sub-techniques
+- `--output-layer <path>` — write an ATT&CK Navigator JSON layer file
+- `--layer-name <name>` — layer name for the generated JSON file
+- `--layer-description <text>` — layer description for the generated JSON file
+- `--attack-version <version>` — ATT&CK release version written into layer metadata (default `19`)
+
+## Generate ATT&CK Navigator layer
 
 ```bash
 python.exe ./mitre_extract_to_layer.py --text ./test.txt --res st --output-layer attack_layer.json --attack-version 19
 ```
 
-Optional layer flags:
-
-- `--layer-name` — set layer name
-- `--layer-description` — set layer description
-- `--attack-version` — set ATT&CK version reported in the layer metadata (default `19`)
+The generated layer file can be loaded into ATT&CK Navigator and will contain technique scores and blue shading according to frequency.
 
 ## Example output
 
@@ -89,9 +88,10 @@ Total Instances of MITRE ATT&CK Techniques found: 21
 
 - `--res st` searches for ATT&CK sub-techniques like `T1234.001`.
 - `--res t` searches for top-level techniques like `T1234`.
-- The Navigator layer file is saved only when `--output-layer` is provided.
+- The Navigator layer file is only created when `--output-layer` is provided.
 - PDF extraction requires `PyMuPDF`; text and URL extraction work without it.
+- `requirements.txt` includes all Python dependencies needed to run the script.
 
 ## Attribution
 
-Based on an MIT-licensed script by Adrian G and extended further.
+Based on an MIT-licensed [script by Adrian G](https://github.com/SignalSculptor/mitre_extractor) and extended further.
