@@ -15,8 +15,7 @@ venv/
 *.swo
 
 # Output and generated files
-attack_layer.json
-attack_layer_test.json
+*.json
 *.log
 
 # OS files
