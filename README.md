@@ -19,6 +19,14 @@ Install dependencies with:
 python -m pip install -r requirements.txt
 ```
 
+## Use cases
+
+- Extract ATT&CK technique IDs from incident reports, threat intelligence write-ups or security advisories.
+- Count technique occurrences in text, HTML or PDF sources to prioritize the most frequent and most relevant techniques.
+- Build a layer file for ATT&CK Navigator so analysts can quickly visualize a report's dominant techniques.
+- Use the JSON layer output for presentations, threat-hunting dashboards, or sharing with SOC teams.
+- Compare multiple reports and cross-check findings by generating and overlaying several Navigator layers.
+
 ## Usage
 
 Extract technique IDs from a text file:
